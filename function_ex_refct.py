@@ -42,4 +42,6 @@ def func_multi_table():
             print("❌ 2~9 사이의 정수가 아닙니다. 다시 입력해주세요.")
             continue # 루프 처음으로 돌아가 다시 입력받기
 
+
+
 func_multi_table()

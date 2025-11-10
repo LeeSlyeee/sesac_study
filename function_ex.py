@@ -21,11 +21,10 @@ def func_multi_table():
         for table_number in range(1,10):
             result = target_number * table_number
             print(f"{target_number} x {table_number} = {result}")
+        return func_multi_table()
 
     else:
         print("2~9사이의 정수를 입력하지 않았습니다. 입력을 다시 시작합니다.")
-        return func_multi_table()       
-
-    return False
-
+        return func_multi_table()
+    
 func_multi_table()
