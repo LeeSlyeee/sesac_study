@@ -18,8 +18,8 @@
 #  - 성적입력 함수 // func_input_score()
 #  - 학생에 따른 점수 평균을 구하는 함수 // func_std_avg()
 #  - 전체학생의 평균을 구하는 함수 // func_total_avg()
-#  - 과목별 최대 점수를 구하는 함수  // find_max_score
-#  - 과목별 최소 점수를 구하는 함수  // find_min_score
+#  - 과목별 최대 점수를 구하는 함수  // find_max_score()
+#  - 과목별 최소 점수를 구하는 함수  // find_min_score()
 
 
 # func_sub_score()에서 리턴한 값을 student_dict에 추가,
@@ -35,7 +35,7 @@ subject_list = ("국어", "수학", "영어", "과학")
 
 
 
-tmp_data = {"이성희": [95,90,85,70], "개발자": [90,94,80,92]}
+# tmp_data = {"이성희": [95,90,85,70], "개발자": [90,94,80,92]}
 
 
 
@@ -51,7 +51,7 @@ def func_input_score(name):
     # print(student_dict)
     print(temp_dic)
     # return temp_dic
-# func_sub_score(name)
+# func_input_score('개발자')
 
 
 
@@ -60,8 +60,18 @@ def func_std_avg(stdt_data, key_str):
     tmp_score = 0
     for score_idx in range(len(subject_list)): 
         tmp_score += stdt_data[key_str][score_idx]
+        average = tmp_score / len(subject_list)
 
-    print(f"{key_str}의 평균점수는 {tmp_score / len(subject_list)}점 입니다.")
+    print(f"{key_str}의 평균점수는 {average}점 입니다.")
+
+    # scores = stdt_data.get(key_str)
+    # if not scores:
+    #     print(f"오류: {key_str} 학생의 데이터가 없습니다.")
+    #     return
+    # total_score = sum(scores)
+    # average = total_score / len(scores)
+    
+    print(f"{key_str}의 평균점수는 {average}점 입니다.")
 # func_std_avg(tmp_data,'개발자')
 
 
@@ -99,6 +109,7 @@ def find_max_score(subject_list, student_dict):
 
         max_score = max(current_subject_scores)
         max_scores[subject] = max_score
+    print(max_scores)
 # find_max_score(subject_list, tmp_data)
 
 
@@ -123,14 +134,14 @@ def find_min_score(subject_list, student_dict):
         min_scores[subject] = min_score
 
     print(min_scores)
-find_min_score(subject_list, tmp_data)
+# find_min_score(subject_list, tmp_data)
 
 
 
 #######################################################################################
 
 def score_manager_program():
-    while len(student_dict.keys()) < 3:
+    while len(student_dict.keys()) < 2:
         # 각 학생의 성적을 입력받는다. 
         name_str = input("학생의 이름은?")
         # 성적입력 함수 실행
@@ -165,4 +176,7 @@ def score_manager_program():
         print("---------- 과목최소 ----------")
         find_min_score(subject_list, student_dict)
 
-score_manager_program()
+# score_manager_program()
+
+
+# func_total_avg(tmp_data)

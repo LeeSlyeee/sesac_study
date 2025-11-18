@@ -18,8 +18,8 @@
 #  - 성적입력 함수 // func_input_score()
 #  - 학생에 따른 점수 평균을 구하는 함수 // func_std_avg()
 #  - 전체학생의 평균을 구하는 함수 // func_total_avg()
-#  - 과목별 최대 점수를 구하는 함수  // find_max_score
-#  - 과목별 최소 점수를 구하는 함수  // find_min_score
+#  - 과목별 최대 점수를 구하는 함수  // find_max_score()
+#  - 과목별 최소 점수를 구하는 함수  // find_min_score()
 
 
 # func_sub_score()에서 리턴한 값을 student_dict에 추가,
@@ -55,7 +55,7 @@ def func_input_score(name):
     temp_dic[name] = temp_score
     student_dict[name] = temp_score
     print(temp_dic)
-# func_sub_score(name)
+func_input_score("이성희")
 
 
 
@@ -69,7 +69,7 @@ def func_std_avg(stdt_data, key_str):
 
     with open(f"Result_avg[{key_str}].txt", "w", encoding="utf-8") as result_avg:
         result_avg.write(f"{key_str}의 평균점수는 {tmp_score / len(subject_list)}점 입니다.")
-# func_std_avg(tmp_data,'개발자')
+# func_std_avg(tmp_data,'이성희')
 
 
 
@@ -163,6 +163,8 @@ def score_manager_program():
         # 텍스트를 딕셔너리로 변환함
         student_dict_file = ast.literal_eval(st_sc_r.read()) 
 
+    print(student_dict_file)
+
     command = input(
     """
     ---------------------------------------------------
@@ -192,7 +194,7 @@ def score_manager_program():
         print("---------- 과목최소 ----------")
         find_min_score(subject_list, student_dict_file)
 
-score_manager_program()
+# score_manager_program()
 
 
 
