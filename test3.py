@@ -3,30 +3,32 @@ while문 - 구구단 출력 프로그램
 """
 
 # while문을 사용하기 위한 초기변수를 dan으로 설정 값은 2로 설정함(구구단은 2단부터 시작하므로)
-dan = 2
+dan = 2 # 구구단 시작 단
 
 # while문의 조건을 9이하로 설정함
-while dan <= 9: 
+while dan <= 9: # 구구단 단수 조건
     # print문으로 현재 구구단 수를 화면에 출력
-    print(f"------- {dan}단 -------")
+    print(f"------- {dan}단 -------") # 현재 단수 출력
 
     # 이중 while문을 사용해야 하므로 변수 설정 기본값 0
-    multi = 0 
+    multi = 0 # 구구단 곱셈 값
     
     # while문 조건을 9이하로 설정 이유는 while문 내 변수 multi를 증가시켜주므로.
-    while multi < 9:
+    while multi < 9: # 구구단 곱셈 조건
         # 곱셈값을 1씩 증가 시킴
-        multi += 1
+        multi += 1 # 구구단 곱셈 값 1증가
         # 구구단을 만들기 위한 기본 수식을 result에 할당
-        result = dan * multi
+        result = dan * multi # 구구단 결과 값
         # 해당 구구단을 화면에 출력 
-        print(f" {dan} x {multi} = {result}")
+        print(f" {dan} x {multi} = {result}") # 구구단 출력문
 
         
     
     # 해당 단이 끝났으므로 현재 구구단 수를 1증가 시킴 
-    dan += 1
-    print()
+    dan += 1 # 구구단 단수 1증가
+    
+    # 단이 바뀌므로 줄바꿈을 추가해 가독성 향상
+    print() # 줄바꿈
 
     # 현재 단수가 상위 while문의 조건을 만족하면 반복 실행. 사실상 필요없는 구문
-    continue
+    continue # while문 계속 실행
