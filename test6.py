@@ -13,28 +13,44 @@ date_by_sales_data = {"10.15": (10,50,45,20), ... }
 
 '''
 
-f = open("coffee.txt", "r", encoding="utf-8")
-header = f.readline()
-header_list = header.split()
 
-# print(header_list)
+f = open("coffee.txt", "r", encoding="utf-8") # 파일 읽기 모드로 열기
+header = f.readline() # 첫번째 줄 읽기
+header_list = header.split() # 공백 기준으로 분리하여 리스트로 저장
 
-for line in f:
-    data_list = line.split()
-    # print(data_list)
+# print(header_list) # 헤더 리스트 출력
+
+date_by_sales_data = {} # 날짜별 판매량을 저장할 딕셔너리
+for line in f: # 파일의 각 줄을 순회
+    data_list = line.split() # 공백 기준으로 분리하여 리스트로 저장
+    date = data_list[0] # 첫번째 요소는 날짜
+    sales_tuple = tuple(map(int, data_list[1:])) # 나머지 요소들은 판매량, 정수형으로 변환 후 튜플로 저장
+    date_by_sales_data[date] = sales_tuple # 딕셔너리에 날짜와 판매량 튜플 저장
+
+
+
+# f = open("coffee.txt", "r", encoding="utf-8")
+# header = f.readline()
+# header_list = header.split()
+
+# # print(header_list)
+
+# for line in f:
+#     data_list = line.split()
+#     # print(data_list)
     
-    date_key_list = []
-    dete_date_list = []
+#     date_key_list = []
+#     dete_date_list = []
 
 
-    for date_data in data_list:
-        if data_list[0]:
-            date_key_list.append(data_list[::-4])
-        else:
-            pass
+#     for date_data in data_list:
+#         if data_list[0]:
+#             date_key_list.append(data_list[::-4])
+#         else:
+#             pass
 
 
-    print(date_key_list)
+#     print(date_key_list)
 
 
 
