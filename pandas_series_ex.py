@@ -29,16 +29,6 @@ import numpy as np
 # print(s)
 
 
-# print(range(10,14))
-
-# print(np.arange(200))
-# 3. [데이터 삭제] Python의 'del' 키워드를 사용하여 시리즈에서 '마산' 인덱스 라벨과 그 값을 영구적으로 제거합니다.
-#    - del 키워드 외에 .drop() 메서드를 사용할 수도 있지만, del이 가장 간결합니다.
-
-# s3 = pd.Series(np.arange(200))
-# print(s3)
-
-
 # # NaN은 np.nan 속성을 이용해서 생성
 # s=pd.Series([1,2,3,np.nan,6,8])
 # print(s)
@@ -597,4 +587,4 @@ s= pd.Series([9904312,3448737,289045,2466052], index=["서울","부산","인천"
 # #    - periods=4: 시작 날짜부터 총 4개의 기간(요소)을 생성하도록 지정합니다.
 # #    - freq='M': Frequency(빈도)를 'Month End'의 약자인 'M'으로 설정하여, "매월 말일"을 기준으로 날짜를 생성하도록 지정합니다.
 # #      (시작 날짜와 관계없이, 이후 돌아오는 매월 말일 날짜를 4개 생성합니다.)
-print(pd.date_range(start='2018-10-01', periods=4, freq='m'))
+# print(pd.date_range(start='2018-10-01', periods=4, freq='m'))
