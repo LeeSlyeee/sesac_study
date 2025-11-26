@@ -19,6 +19,7 @@ def get_data_dict(chart, cate):
     #    - chart[...] : 이 불리언 Series를 필터링 마스크로 사용하여, True인 행들만 선택합니다.
     # [결과] 'data_df'는 사용자가 지정한 '대분류'에 속하는 데이터만 담고 있는 작은 DataFrame이 됩니다.
     data_df = chart[chart['대분류'] == cate]
+       
     plt.figure(figsize=(10, 10))
     
     # 데이터 컬럼 인덱스 정의 (3번째부터 6번째 컬럼까지)
@@ -37,6 +38,10 @@ def get_data_dict(chart, cate):
             weight='bold'
         )
         
+        color =["#B15252", "#C3E75E", "#4A9E43", "#4998FF", "#CB59FF", "#FC57BD"]
+        # data_df의 index를 가져오면 리스트 형태로 뿌려주고 리스트의 갯수를 이용하여 explode값을 동적으로 적용함.
+        explode = [0.015 for df_idx in range(len(data_df.index))]
+        
         # plt.pie()에 전달되는 data_df[column_names[i]]는 Series 객체입니다.
         # 만약 '대분류' 필터링 후에도 행이 여러 개라면, 해당 컬럼의 모든 값이 파이 조각이 됩니다.
         plt.pie(
@@ -44,10 +49,12 @@ def get_data_dict(chart, cate):
             labels=data_df["분류"],
             autopct='%.1f%%',
             startangle=200,
+            colors=color,
+            explode=explode,
             counterclock=False
         )
         
     plt.tight_layout()
     plt.show()
     
-# get_data_dict(df, input_category)
+get_data_dict(df, input_category)
