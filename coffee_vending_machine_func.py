@@ -51,12 +51,6 @@ def select_bevarage(): # 음료 선택 함수
     
 
 
-def print_price(): # 가격 출력 함수
-    pick_bevarage = select_bevarage() # 음료 선택 함수 호출
-    print(f"{pick_bevarage}의 가격은 {price[pick_bevarage]}원 입니다.") # 선택한 음료의 가격 출력   
-
-
-
 def pay_money(pick_bevarage): # 결제 함수
     
     try: # 숫자가 아닌 값이 입력되면 여기서 ValueError가 발생합니다.
@@ -140,8 +134,7 @@ def coffee_vending_machine(): # 커피 자판기 함수
     while True: # 무한 루프
         make_bevarage() # 음료 제조 함수 호출
         check_ingredient() # 재고 확인 함수 호출
-        # continue_or_not() # 계속 진행 여부 함수 호출
-        
+                
         if not continue_or_not(): # 계속 진행 여부가 False일 시
             break # 루프 종료
         
