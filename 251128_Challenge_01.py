@@ -67,7 +67,9 @@ plt.xlabel('CCTV비율')
 plt.ylabel('구별')
 # 그래프 제목을 'CCTV 비율'로 설정합니다.
 plt.title('CCTV 비율')
-# 생성된 그래프를 화면에 출력합니다.
+# 생성된 그래프를 저장하고 화면에 출력합니다.
+plt.savefig('cctv_analysis01.png')
+print("\n그래프가 'cctv_analysis01.png'로 저장되었습니다.")
 plt.show()
 
 
