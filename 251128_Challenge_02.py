@@ -56,8 +56,8 @@ plt.xlabel('인구 대비 CCTV 비율')
 # y축 레이블을 '구별'로 설정합니다.
 plt.ylabel('구별')
 
-# 그래프 제목을 '서울시 구별 인구 대비 CCTV 비율'로 설정합니다.
-plt.title('서울시 구별 인구 대비 CCTV 비율')
+# 그래프 제목을 '구별 인구 대비 CCTV 비율'로 설정합니다.
+plt.title('구별 인구 대비 CCTV 비율')
 
 # 범례(label로 설정한 평균선 설명)를 표시합니다.
 plt.legend()
