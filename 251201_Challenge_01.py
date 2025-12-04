@@ -46,6 +46,7 @@ open_store['소재지주소'] = open_store['소재지전체주소'].combine_firs
 open_store.drop(columns=['소재지전체주소', '도로명전체주소'], axis=1, inplace=True)
 
 # "소재지주소" 컬럼 값에 "서울특별시 서대문구" 문자열이 포함된 행만 필터링하여 seodaemun에 저장합니다.
+# 결측치는 False로 처리하겠다. (na=False)
 seodaemun = open_store[open_store['소재지주소'].str.contains('서울특별시 서대문구', na=False)]
 
 # 서대문구 데이터 중 "업태구분명"에 "통닭 또는 치킨" 문자열이 포함된 행만 필터링하여 seodaemun_chiken에 저장합니다.
