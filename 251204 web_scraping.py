@@ -700,62 +700,38 @@ def get_image_url(url):
 # 2. "함수 정의: 이미지 다운로드 (download_image)"
 
     
-# def download_image(img_folder, img_url):
-#     if(img_url != None):  
-#         html_image = requests.get(img_url)
-#         imageFile = open(os.path.join(img_folder, os.path.basename(img_url)), 'wb')
-#         chunk_size = 1000000
-#         for chunk in html_image.iter_content(chunk_size):
-#             imageFile.write(chunk)
-#             imageFile.close()
-#         print(f"이미지 파일명: '{os.path.basename(img_url)}'. 내려받기 완료!") 
-#     else:       
-#         print("내려받을 이미지가 없습니다.")
-
-
 def download_image(img_folder, img_url):
-    """
-    주어진 URL의 이미지를 지정된 폴더에 스트리밍 방식으로 다운로드하여 저장합니다.
-
-    :param img_folder: 이미지를 저장할 로컬 폴더 경로입니다.
-    :param img_url: 다운로드할 이미지의 URL입니다.
-    """
-    # 1. URL 유효성 검사
-    if img_url is not None:
+    # img_folder: 이미지를 저장할 로컬 폴더 경로 (예: 'C:/Myexam/download')
+    # img_url: 다운로드할 이미지의 웹 URL
+    
+    # 1. URL 유효성 검사: img_url이 None이 아닌지 확인하여 유효한 URL이 있을 때만 다운로드 작업을 시작합니다.
+    if(img_url != None): 
+        # 2. 이미지 데이터 요청: requests.get(img_url)을 사용하여 해당 URL로 HTTP GET 요청을 보냅니다.
+        #    서버로부터 이미지의 바이너리 데이터가 포함된 Response 객체를 'html_image'에 저장합니다.
+        html_image = requests.get(img_url)
         
-        # 2. 이미지 데이터 요청
-        # requests.get(img_url)을 사용하여 Response 객체를 가져옵니다.
-        # stream=True를 사용하여 큰 파일을 다운로드할 때 메모리 부하를 줄일 수 있습니다.
-        try:
-            html_image = requests.get(img_url, stream=True)
-            html_image.raise_for_status() # HTTP 오류 발생 시 예외를 발생시킵니다.
-        except requests.exceptions.RequestException as e:
-            print(f"이미지 다운로드 실패 ({os.path.basename(img_url)}): {e}")
-            return
-            
-        # 3. 파일 경로 구성
-        file_name = os.path.basename(img_url)
-        image_path = os.path.join(img_folder, file_name)
+        # 3. 파일 열기: os.path.join()을 사용하여 폴더 경로와 파일 이름(os.path.basename(img_url)으로 URL에서 추출)을 결합합니다.
+        #    open() 함수로 해당 경로에 파일을 "쓰기 바이너리 모드('wb')"로 열어 'imageFile' 객체를 만듭니다.
+        imageFile = open(os.path.join(img_folder, os.path.basename(img_url)), 'wb')
         
-        # 4. 파일 열기 및 스트리밍 저장 (with 문 사용)
-        # 'with open(...)' 구문은 블록을 벗어날 때 파일을 "자동으로 닫아줍니다".
-        # 'wb' 모드(write binary)로 파일을 엽니다.
-        with open(image_path, 'wb') as imageFile:
-            chunk_size = 1000000 # 1MB 청크 크기 정의
+        # 4. 청크 크기 정의: 파일 저장을 위한 데이터 조각(청크)의 크기를 바이트 단위로 정의합니다. (1MB)
+        chunk_size = 1000000
+        
+        # 5. 스트리밍 저장 시작: html_image.iter_content(chunk_size)를 사용하여 이미지 데이터를 청크 단위로 읽어오며 반복합니다.
+        #    이는 큰 파일을 메모리에 한 번에 올리지 않아 "메모리 효율적"입니다.
+        for chunk in html_image.iter_content(chunk_size):
+            # 6. 데이터 쓰기: 읽어온 데이터 조각('chunk')을 'imageFile' 객체를 통해 디스크에 씁니다.
+            imageFile.write(chunk)
             
-            # Response 객체에서 데이터를 청크 단위로 읽어오며 반복합니다.
-            for chunk in html_image.iter_content(chunk_size):
-                imageFile.write(chunk)
-            
-            # 💡 오류 수정: 이전 코드와 달리, imageFile.close()가 for 루프 밖에 위치하거나 (여기서는 with 문이 처리)
-            #   모든 청크 쓰기가 완료된 후에 실행되도록 보장됩니다.
-            
-        # 5. 완료 메시지
-        print(f"이미지 파일명: '{file_name}'. 내려받기 완료!") 
+        # 7. 파일 닫기: 모든 청크 쓰기 작업이 완료되면, 'imageFile.close()'를 호출하여 파일을 "닫고" 시스템 자원을 해제합니다.
+        imageFile.close()
+        
+        # 8. 완료 메시지 출력: 다운로드 성공 메시지와 저장된 파일 이름을 출력합니다.
+        print(f"이미지 파일명: '{os.path.basename(img_url)}'. 내려받기 완료!") 
         
     else: 
+        # 9. URL이 None일 경우: 다운로드할 이미지가 없다는 메시지를 출력합니다.
         print("내려받을 이미지가 없습니다.")
-
 
 
 
