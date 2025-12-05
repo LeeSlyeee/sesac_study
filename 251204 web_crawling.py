@@ -11,63 +11,63 @@ from bs4 import BeautifulSoup
 
 
 
-# --- 네이버 검색 예제 ---
+# # --- 네이버 검색 예제 ---
 
-# 네이버 검색 기본 URL을 변수에 저장합니다.
-naver_search_url = 'http://search.naver.com/search.naver?query='
-# 검색할 단어를 지정합니다. ('파이썬'은 한국어로 'Python'을 의미)
-search_word = '파이썬'
-# 기본 URL과 검색어를 결합하여 전체 검색 URL을 완성합니다.
-url = naver_search_url + search_word
-# 완성된 URL을 운영체제의 기본 웹 브라우저의 "새 창" 또는 "새 탭"으로 엽니다.
-webbrowser.open_new(url)
-
-
-
-
-
-
-# --- 구글 검색 예제 (영어) ---
-
-# 구글 검색 기본 URL을 변수에 저장합니다.
-google_url = 'http://www.google.com/search?q='
-# 검색할 단어를 지정합니다. (여기서는 'python' 영어 단어)
-search_word = 'python'
-# 기본 URL과 검색어를 결합하여 전체 검색 URL을 완성합니다.
-url = google_url + search_word
-# 완성된 URL을 "새 창" 또는 "새 탭"으로 엽니다.
-webbrowser.open_new(url)
+# # 네이버 검색 기본 URL을 변수에 저장합니다.
+# naver_search_url = 'http://search.naver.com/search.naver?query='
+# # 검색할 단어를 지정합니다. ('파이썬'은 한국어로 'Python'을 의미)
+# search_word = '파이썬'
+# # 기본 URL과 검색어를 결합하여 전체 검색 URL을 완성합니다.
+# url = naver_search_url + search_word
+# # 완성된 URL을 운영체제의 기본 웹 브라우저의 "새 창" 또는 "새 탭"으로 엽니다.
+# webbrowser.open_new(url)
 
 
 
 
 
-# --- 다중 웹사이트 열기 예제 ---
 
-# 열고자 하는 여러 웹사이트 URL을 리스트로 정의합니다. (접속 시 'http://'가 자동으로 붙음)
-urls = ['www.naver.com', 'www.daum.net', 'www.google.com']
+# # --- 구글 검색 예제 (영어) ---
 
-# 리스트에 있는 각 URL을 반복문(for loop)을 통해 순서대로 처리합니다.
-for url in urls:
-    # 각 URL을 "새 창" 또는 "새 탭"으로 엽니다.
-    webbrowser.open_new(url)
+# # 구글 검색 기본 URL을 변수에 저장합니다.
+# google_url = 'http://www.google.com/search?q='
+# # 검색할 단어를 지정합니다. (여기서는 'python' 영어 단어)
+# search_word = 'python'
+# # 기본 URL과 검색어를 결합하여 전체 검색 URL을 완성합니다.
+# url = google_url + search_word
+# # 완성된 URL을 "새 창" 또는 "새 탭"으로 엽니다.
+# webbrowser.open_new(url)
 
 
 
 
 
-# --- 다중 검색어 구글 검색 예제 ---
+# # --- 다중 웹사이트 열기 예제 ---
 
-# 구글 검색 기본 URL을 변수에 저장합니다.
-google_url = "www.google.com/search?q="
-# 검색할 여러 키워드를 리스트로 정의합니다.
-search_words = ['python web scraping', 'python webbrowser']
-# 리스트에 있는 각 검색어를 반복문으로 처리합니다.
-for search_word in search_words:
-    # 기본 URL과 검색어를 결합하여 검색을 수행합니다.
-    # 'webbrowser.open()'은 이미 열려있는 창이 있으면 "새 탭"으로 열릴 가능성이 높습니다.
-    # 'webbrowser.open_new()'와 달리 "새 창"을 강제하지 않을 수 있습니다.
-    webbrowser.open(google_url + search_word)
+# # 열고자 하는 여러 웹사이트 URL을 리스트로 정의합니다. (접속 시 'http://'가 자동으로 붙음)
+# urls = ['www.naver.com', 'www.daum.net', 'www.google.com']
+
+# # 리스트에 있는 각 URL을 반복문(for loop)을 통해 순서대로 처리합니다.
+# for url in urls:
+#     # 각 URL을 "새 창" 또는 "새 탭"으로 엽니다.
+#     webbrowser.open_new(url)
+
+
+
+
+
+# # --- 다중 검색어 구글 검색 예제 ---
+
+# # 구글 검색 기본 URL을 변수에 저장합니다.
+# google_url = "www.google.com/search?q="
+# # 검색할 여러 키워드를 리스트로 정의합니다.
+# search_words = ['python web scraping', 'python webbrowser']
+# # 리스트에 있는 각 검색어를 반복문으로 처리합니다.
+# for search_word in search_words:
+#     # 기본 URL과 검색어를 결합하여 검색을 수행합니다.
+#     # 'webbrowser.open()'은 이미 열려있는 창이 있으면 "새 탭"으로 열릴 가능성이 높습니다.
+#     # 'webbrowser.open_new()'와 달리 "새 창"을 강제하지 않을 수 있습니다.
+#     webbrowser.open(google_url + search_word)
 
 
 
@@ -421,3 +421,536 @@ print(html_image)
 # URL의 경로 구분자('/') 이후의 모든 문자열('python-logo.png')이 추출되어 'image_file_name' 변수에 저장됩니다.
 image_file_name = os.path.basename(url)
 print(image_file_name)
+
+
+
+
+
+
+
+# --- 폴더 생성 및 파일 경로 구성 ---
+
+
+
+# 1. 폴더 생성 및 확인 (Directory Creation and Check)
+
+# 이미지 파일을 저장할 목표 폴더 경로를 'folder' 변수에 문자열로 정의합니다.
+folder = 'C:/Myexam/download' 
+
+# 'os.path.exists(folder)' 함수를 사용하여 정의된 'folder' 경로가 운영체제에 **"실제로 존재하는지"** 확인합니다.
+if not os.path.exists(folder):
+    # 만약 폴더가 존재하지 않는다면 (if not True, 즉 False라면):
+    
+    # 'os.makedirs(folder)' 함수를 사용하여 해당 경로의 폴더를 생성합니다.
+    # 이 함수는 중간 경로('C:/Myexam')도 함께 생성해줍니다. (mkdir()과는 다름)
+    os.makedirs(folder)
+    
+ 
+    
+
+# 2. 최종 이미지 경로 구성 (Final Image Path Construction)
+
+# 'os.path.join(folder, image_file_name)' 함수를 사용하여 디렉터리 경로와 파일 이름을 결합합니다.
+# 이 함수는 운영체제(Windows, Linux, macOS)에 맞는 **"올바른 경로 구분자"**를 자동으로 사용하여 최종 파일 경로를 생성합니다.
+# 예: 'C:/Myexam/download' + '/' + 'python-logo.png' -> 'C:/Myexam/download/python-logo.png'
+image_path = os.path.join(folder, image_file_name)
+
+# 'image_path' 변수에 저장된 최종 경로를 출력합니다. (Jupyter/Colab 환경에서는 변수만 적으면 출력됨)
+print(image_path)
+
+
+
+
+# --- 이미지 파일 저장 및 확인 ---
+
+# 1. 이미지 파일 저장 (Writing the Image File)
+
+# 'image_path' 변수(예: 'C:/Myexam/download/python-logo.png')에 지정된 경로로 파일을 엽니다.
+# 'wb' 모드(write binary)는 이미지와 같은 바이너리 데이터를 "쓰기" 위해 사용됩니다.
+# 파일 객체는 'imageFile' 변수에 저장됩니다.
+imageFile = open(image_path, 'wb')
+
+# 파일 저장 시 사용할 청크(조각) 크기를 바이트 단위로 정의합니다.
+# "chunk_size" = 1,000,000 바이트 (약 1MB)로 설정되어 있습니다.
+chunk_size = 1000000
+
+# "html_image" Response 객체에서 ".iter_content(chunk_size)" 메서드를 사용하여 데이터를 반복합니다.
+# 이 메서드는 이미지 데이터를 설정된 "chunk_size" 단위로 나누어 반환합니다.
+# 큰 파일을 처리할 때 메모리 부하를 줄이는 데 매우 효율적입니다.
+for chunk in html_image.iter_content(chunk_size):
+    # 반복문에서 얻은 데이터 조각("chunk")을 'imageFile' 객체를 통해 디스크에 "쓰기"를 수행합니다.
+    imageFile.write(chunk)
+
+# 모든 데이터 조각이 쓰여지면, 파일에 대한 작업을 완료하고 'imageFile' 객체를 "닫습니다".
+# 파일을 닫는 것은 데이터의 손실을 막고 시스템 자원을 해제하는 데 중요합니다.
+imageFile.close()
+
+# "핵심 기능": iter_content()를 사용하여 스트리밍 방식으로 데이터를 읽고 **write()**로 디스크에 저장함으로써, 메모리에 전체 파일을 한 번에 로드하지 않고도 큰 파일을 안정적으로 다운로드할 수 있습니다.
+
+
+
+# 2. 저장 확인 (Verification)
+
+# 'os.listdir(folder)' 함수를 사용하여 'folder' 변수(예: 'C:/Myexam/download')가 가리키는 디렉터리 내의 모든 파일과 폴더 "이름"을 리스트 형태로 가져옵니다.
+print(os.listdir(folder))
+
+# 이 출력 결과에 'python-logo.png'와 같은 "image_file_name"이 포함되어 있다면 파일 저장이 성공했음을 의미합니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+# --- 웹 이미지 다운로드 전체 ---
+
+
+# --- 1. "초기 설정 및 요청" (Setup and Request) ---
+
+
+# 다운로드할 이미지 파일의 전체 URL을 'url' 변수에 저장합니다.
+url = 'https://www.python.org/static/img/python-logo.png'
+
+# "requests.get()" 함수를 사용하여 해당 URL로 HTTP GET 요청을 보냅니다.
+# 웹 서버로부터 이미지 파일의 바이너리 데이터를 포함하는 "Response 객체"를 'html_image'에 저장합니다.
+html_image = requests.get(url)
+
+# "os.path.basename(url)" 함수를 사용하여 URL 경로에서 "순수한 파일 이름"('python-logo.png')만을 추출하여 'image_file_name'에 저장합니다.
+image_file_name = os.path.basename(url)
+
+
+
+
+
+# --- 2. "저장 폴더 확인 및 생성" (Folder Check and Creation) ---
+
+
+# 이미지 파일을 저장할 로컬 목표 폴더 경로를 'folder' 변수에 정의합니다.
+folder = 'C:/Myexam/download' 
+
+# "os.path.exists(folder)" 함수를 사용하여 해당 경로에 폴더가 "존재하는지" 확인합니다.
+if not os.path.exists(folder):
+    # 폴더가 존재하지 않는다면:
+    
+    # "os.makedirs(folder)" 함수를 사용하여 해당 폴더를 "생성"합니다.
+    # 중간 디렉터리(예: 'C:/Myexam')도 존재하지 않으면 함께 생성됩니다.
+    os.makedirs(folder)
+
+# "os.path.join(folder, image_file_name)" 함수를 사용하여 폴더 경로와 파일 이름을 결합하여 
+# "파일이 저장될 최종 경로"('C:/Myexam/download/python-logo.png')를 'image_path'에 구성합니다.
+image_path = os.path.join(folder, image_file_name)
+
+
+
+
+
+# --- 3. "파일 스트리밍 저장" (Streaming File Save) ---
+
+# "image_path"에 지정된 경로로 파일을 "열고" 파일 객체를 'imageFile'에 저장합니다.
+# 'wb' 모드(write binary)는 텍스트가 아닌 "바이너리" 데이터(이미지)를 쓰기 위해 "필수적"입니다.
+imageFile = open(image_path, 'wb')
+
+# 파일 저장 시 메모리 효율을 높이기 위해 데이터를 나눌 "청크 크기"를 바이트 단위로 정의합니다.
+# "chunk_size" = 1,000,000 바이트 (약 1MB)입니다.
+chunk_size = 1000000
+
+# "html_image.iter_content(chunk_size)" 메서드를 사용하여 Response 객체의 이미지 데이터를 
+# "chunk_size" 단위로 나누어 "반복적"으로 읽어옵니다. (스트리밍)
+# 이 방법은 파일 전체를 메모리에 한 번에 올리지 않아 "대용량 파일" 다운로드에 유리합니다.
+for chunk in html_image.iter_content(chunk_size):
+    # 반복을 통해 얻은 데이터 조각("chunk")을 'imageFile' 객체를 통해 디스크에 "쓰기"를 수행합니다.
+    imageFile.write(chunk)
+
+# 모든 데이터 쓰기 작업이 완료되면, "imageFile.close()"를 호출하여 파일을 "닫고" 시스템 자원을 해제합니다.
+imageFile.close()
+
+
+
+
+
+
+
+
+
+# --- 웹 이미지 스크래핑 및 다운로드 ---
+
+
+# 1. "웹페이지 데이터 가져오기 및 파싱" (Fetch and Parse Webpage Data)
+
+# 이미지 소스를 찾을 웹페이지 URL을 'URL' 변수에 저장합니다. (무료 스톡 이미지 사이트)
+URL = 'https://reshot.com/search/animal'
+
+# "requests.get(URL)"을 사용하여 해당 URL로 HTTP GET 요청을 보내고, 
+# ".text" 속성을 이용해 응답으로 받은 HTML 소스 코드를 문자열로 추출하여 'html_reshot_image'에 저장합니다.
+html_reshot_image = requests.get(URL).text
+
+# BeautifulSoup 객체를 생성합니다.
+# 첫 번째 인수로 HTML 소스 코드 문자열을, 두 번째 인수로 "lxml" 파서를 지정하여 HTML 구조를 분석합니다.
+soup_reshot_image = BeautifulSoup(html_reshot_image, "lxml")
+
+# CSS 선택자("a img")를 사용하여 특정 이미지 요소를 찾습니다.
+# 이는 <a> 태그 안에 있는 모든 <img> 태그를 의미하며, 일반적으로 클릭 가능한 이미지 링크를 찾을 때 사용됩니다.
+# 찾은 모든 요소는 리스트 형태로 'reshot_image_elements'에 저장됩니다.
+reshot_image_elements = soup_reshot_image.select('a img') 
+
+# 찾은 이미지 요소 리스트의 앞에서 4개까지 출력하여 구조를 확인합니다.
+reshot_image_elements[0:4]
+
+
+
+
+# 2. "이미지 URL 추출 및 다운로드" (Extract URL and Download) 
+
+# 'reshot_image_elements' 리스트에서 두 번째 요소(인덱스 1)를 선택하고, 
+# ".get('src')" 메서드를 사용하여 해당 <img> 태그의 'src' 속성 값(실제 이미지 URL)을 추출합니다.
+reshot_image_url = reshot_image_elements[1].get('src')
+
+# 추출된 이미지 URL을 출력하여 확인합니다.
+reshot_image_url
+
+# "requests.get(reshot_image_url)"을 사용하여 추출된 이미지 URL로 HTTP GET 요청을 보내고, 
+# 이미지 바이너리 데이터를 포함하는 "Response 객체"를 'html_image'에 저장합니다. (다운로드 준비)
+html_image = requests.get(reshot_image_url)
+
+# 이미지를 저장할 로컬 폴더 경로를 정의합니다.
+# (이전에 해당 폴더가 생성되었는지 확인하는 코드는 생략되어 있으므로, 존재해야 오류가 발생하지 않습니다.)
+folder = "C:/Myexam/download"
+
+
+
+
+# 3. "스트리밍 파일 저장" (Streaming File Save)
+  
+# 파일 경로를 구성하여 파일을 "쓰기 바이너리 모드('wb')"로 엽니다.
+# "os.path.join(folder, os.path.basename(reshot_image_url))"은 
+# '폴더 경로'와 URL에서 추출한 '순수한 파일 이름'을 결합하여 최종 저장 경로를 만듭니다.
+imageFile = open(os.path.join(folder, os.path.basename(reshot_image_url)), 'wb')
+
+# 파일 저장 시 사용할 데이터 조각(청크)의 크기를 바이트 단위로 정의합니다. (1MB)
+chunk_size = 1000000 
+
+# 'html_image.iter_content(chunk_size)'를 사용하여 이미지 데이터를 청크 단위로 분할하여 반복합니다.
+# 이는 "큰 파일"을 메모리에 한 번에 로드하지 않고 스트리밍 방식으로 처리하는 데 효율적입니다.
+for chunk in html_image.iter_content(chunk_size):
+    # 반복문에서 얻은 데이터 조각("chunk")을 열려 있는 파일 객체 'imageFile'에 "쓰기"를 수행합니다.
+    imageFile.write(chunk)
+
+# 모든 쓰기 작업이 완료되면, 'imageFile.close()'를 호출하여 파일을 "닫고" 시스템 자원을 해제합니다.
+imageFile.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# --- 웹 이미지 일괄 다운로드 (함수로 만들어서 가져오기) ---
+
+
+# 1. "함수 정의: 이미지 URL 추출 (get_image_url)"
+
+def get_image_url(url): 
+    # 1. HTML 소스 가져오기: requests.get()으로 요청 후 .text로 HTML 문자열을 얻습니다.
+    html_image_url = requests.get(url).text 
+    
+    # 2. BeautifulSoup 객체 생성: HTML을 파싱(분석)하여 데이터 추출 준비를 합니다.
+    soup_image_url = BeautifulSoup(html_image_url, "lxml") 
+    
+    # 3. 모든 <img> 태그 찾기: CSS 선택자 'img'를 사용하여 페이지의 모든 이미지 요소를 찾습니다.
+    image_elements = soup_image_url.select('img') 
+    
+    # 4. 이미지 요소 존재 여부 확인: 요소 리스트가 비어있지 않은지 확인합니다.
+    if(image_elements != None):
+        image_urls = [] # 이미지 URL을 저장할 빈 리스트를 초기화합니다.
+        
+        # 5. URL 추출: 찾은 모든 <img> 태그에 대해 반복합니다.
+        for image_element in image_elements:
+            # ".get('src')"를 사용하여 해당 태그의 'src' 속성 값(이미지 URL)을 추출해 리스트에 추가합니다.
+            image_urls.append(image_element.get('src'))
+            
+        return image_urls # 이미지 URL 리스트를 반환합니다.
+        
+    else: 
+        return None # <img> 태그가 발견되지 않으면 None을 반환합니다.
+    
+    
+    
+
+
+
+# 2. "함수 정의: 이미지 다운로드 (download_image)"
+
+    
+# def download_image(img_folder, img_url):
+#     if(img_url != None):  
+#         html_image = requests.get(img_url)
+#         imageFile = open(os.path.join(img_folder, os.path.basename(img_url)), 'wb')
+#         chunk_size = 1000000
+#         for chunk in html_image.iter_content(chunk_size):
+#             imageFile.write(chunk)
+#             imageFile.close()
+#         print(f"이미지 파일명: '{os.path.basename(img_url)}'. 내려받기 완료!") 
+#     else:       
+#         print("내려받을 이미지가 없습니다.")
+
+
+def download_image(img_folder, img_url):
+    """
+    주어진 URL의 이미지를 지정된 폴더에 스트리밍 방식으로 다운로드하여 저장합니다.
+
+    :param img_folder: 이미지를 저장할 로컬 폴더 경로입니다.
+    :param img_url: 다운로드할 이미지의 URL입니다.
+    """
+    # 1. URL 유효성 검사
+    if img_url is not None:
+        
+        # 2. 이미지 데이터 요청
+        # requests.get(img_url)을 사용하여 Response 객체를 가져옵니다.
+        # stream=True를 사용하여 큰 파일을 다운로드할 때 메모리 부하를 줄일 수 있습니다.
+        try:
+            html_image = requests.get(img_url, stream=True)
+            html_image.raise_for_status() # HTTP 오류 발생 시 예외를 발생시킵니다.
+        except requests.exceptions.RequestException as e:
+            print(f"이미지 다운로드 실패 ({os.path.basename(img_url)}): {e}")
+            return
+            
+        # 3. 파일 경로 구성
+        file_name = os.path.basename(img_url)
+        image_path = os.path.join(img_folder, file_name)
+        
+        # 4. 파일 열기 및 스트리밍 저장 (with 문 사용)
+        # 'with open(...)' 구문은 블록을 벗어날 때 파일을 "자동으로 닫아줍니다".
+        # 'wb' 모드(write binary)로 파일을 엽니다.
+        with open(image_path, 'wb') as imageFile:
+            chunk_size = 1000000 # 1MB 청크 크기 정의
+            
+            # Response 객체에서 데이터를 청크 단위로 읽어오며 반복합니다.
+            for chunk in html_image.iter_content(chunk_size):
+                imageFile.write(chunk)
+            
+            # 💡 오류 수정: 이전 코드와 달리, imageFile.close()가 for 루프 밖에 위치하거나 (여기서는 with 문이 처리)
+            #   모든 청크 쓰기가 완료된 후에 실행되도록 보장됩니다.
+            
+        # 5. 완료 메시지
+        print(f"이미지 파일명: '{file_name}'. 내려받기 완료!") 
+        
+    else: 
+        print("내려받을 이미지가 없습니다.")
+
+
+
+
+
+
+# 3. "메인 실행 블록" (Main Execution Block)
+
+# 1) URL 및 폴더 정의
+reshot_url = 'https://www.reshot.com/search/animal' # 이미지 소스 웹페이지 URL
+figure_folder = "C:/Myexam/download" # 이미지 저장 경로
+
+# 2) 이미지 URL 리스트 가져오기
+# get_image_url 함수를 호출하여 페이지의 모든 이미지 URL 리스트를 얻습니다.
+reshot_image_urls = get_image_url(reshot_url)
+
+# 3) 다운로드 횟수 설정
+# 리스트의 길이만큼 반복하기 위해 개수를 확인합니다.
+num_of_download_image = len(reshot_image_urls)
+
+# 4) 일괄 다운로드 실행
+# 리스트의 모든 URL에 대해 반복합니다. (0부터 num_of_download_image - 1까지)
+for k in range(num_of_download_image):
+    # download_image 함수를 호출하여 리스트의 각 URL에 해당하는 이미지를 다운로드합니다.
+    # ⚠️ "download_image" 함수의 오류 때문에, 이 코드를 실행하면 첫 이미지 다운로드 시 "File I/O Error"가 발생하거나, 
+    #   다운로드가 불완전하게 끝날 수 있습니다.
+    download_image(figure_folder,reshot_image_urls[k])
+    
+# 5) 최종 완료 메시지
+print("================================")
+print("선택한 모든 이미지 내려받기 완료!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
