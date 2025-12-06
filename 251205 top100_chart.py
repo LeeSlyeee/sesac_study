@@ -9,12 +9,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import korean
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 
 
 # --- 1.1. 크롤링 대상 URL 정의 ---
 melon_url = 'https://www.melon.com/chart/'
 bugs_url = 'https://music.bugs.co.kr/chart/'
-genie_url = 'https://www.genie.co.kr/chart/top200/'
+# genie_url = 'https://www.genie.co.kr/chart/top200/'
 
 
 # --- 1.2. HTTP 헤더 설정 ---
@@ -41,11 +45,11 @@ melon_title = []
 melon_artist = []
 
 
-for title_element in melon_song_title[:50]: # 상위 50개 항목만 반복
+for title_element in melon_song_title: # 상위 100개 항목만 반복
     song_title = title_element.get_text(strip=True) # 태그 제거 및 공백 제거 후 텍스트 추출
     melon_title.append(song_title)
     
-for artist_element in melon_song_artist[:50]: # 상위 50개 항목만 반복
+for artist_element in melon_song_artist: # 상위 100개 항목만 반복
     artist_name = artist_element.get_text(strip=True)
     melon_artist.append(artist_name)
 
@@ -87,11 +91,11 @@ bugs_title = []
 bugs_artist = []
 
 
-for title_element in bugs_song_title[:50]:
+for title_element in bugs_song_title:
     song_title = title_element.get_text(strip=True)
     bugs_title.append(song_title)
     
-for artist_element in bugs_song_artist[:50]:
+for artist_element in bugs_song_artist:
     artist_name = artist_element.get_text(strip=True)
     bugs_artist.append(artist_name)
 
@@ -114,46 +118,75 @@ df_bugs_chart.reset_index(drop=False, inplace=True)
 
 
 
-# --- 4.1. 지니 차트 데이터 요청 및 파싱 ---
-genie_response = requests.get(genie_url, headers=headers)
-genie_response.encoding = 'UTF-8'
+# # --- 4.1. 지니 차트 데이터 요청 및 파싱 ---
+# genie_response = requests.get(genie_url, headers=headers)
+# genie_response.encoding = 'UTF-8'
 
-genie_target = genie_response.text
-genie_dom = BeautifulSoup(genie_target, "lxml")
+# genie_target = genie_response.text
 
-
-# --- 4.2. CSS Selector를 이용한 데이터 추출 ---
-# 곡 제목 요소 선택
-genie_song_title = genie_dom.select('table.list-wrap > tbody > tr.list > td.info > a.title')
-# 아티스트 이름 요소 선택
-genie_song_artist = genie_dom.select('table.list-wrap > tbody > tr.list > td.info > a.artist')
 
 
 # --- 4.3. 추출된 데이터를 리스트에 저장 ---
-genie_title = []
-genie_artist = []
+genie_song_title = []
+genie_song_artist = []
 
 
-for title_element in genie_song_title[:50]:
-    # 지니는 텍스트에 순위 번호나 다른 불필요한 공백이 있을 수 있으므로 추가적인 전처리가 필요할 수 있음
-    song_title = title_element.get_text(strip=True)
-    genie_title.append(song_title)
+def get_genie_music(page):
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     
-for artist_element in genie_song_artist[:50]:
-    artist_name = artist_element.get_text(strip=True)
-    genie_artist.append(artist_name)
+    driver.get("https://www.genie.co.kr/chart/top200/?ditc=D&ymd=20251206&hh=16&rtm=Y&pg=" + str(page))
+    
+    music_info = driver.find_elements(By.CSS_SELECTOR,'table.list-wrap td.info')
+    
+    for title in music_info:
+        try:
+            # 1. 일반적인 기사 제목을 포함하는 요소를 찾습니다.
+            tmp_elements = title.find_elements(By.CSS_SELECTOR, 'td.info a.title')
+            
+            if tmp_elements:
+                title = tmp_elements[0].text
+            else:
+                title = "해당 정보 없음"
+            
+            genie_song_title.append(title)
+        except:
+            print("에러 발생!")
+            
+            
+    for artist in music_info:
+        try:
+            tmp_elements = artist.find_elements(By.CSS_SELECTOR, 'td.info a.artist')
+            
+            if tmp_elements:
+                artist = tmp_elements[0].text
+            else:
+                artist = "해당 정보 없음"
+            
+            genie_song_artist.append(artist)
+        except:
+            print("에러 발생!")
+            
+    print("end :", page)
+    driver.quit()
 
 
+for page in range(1, 3):
+    get_genie_music(page)
+    
+    
 # --- 4.4. 지니 데이터프레임 생성 및 순위 추가 ---
 genie_data = {
-    '곡_제목': genie_title,
-    '가수': genie_artist
+    '곡_제목': genie_song_title,
+    '가수': genie_song_artist
 }
 
 df_genie_chart = pd.DataFrame(genie_data)
 
 df_genie_chart.index += 1
 df_genie_chart.reset_index(drop=False, inplace=True)
+
+
+
 
 
 
@@ -228,7 +261,7 @@ df_counts = pd.DataFrame(song_counts.items(), columns=['곡명 - 아티스트', 
 df_counts_sorted = df_counts.sort_values(by='등장 횟수', ascending=False)
 
 # 상위 25개 곡만 선택합니다.
-df_top25 = df_counts_sorted.head(25)
+df_top25 = df_counts_sorted.head(50)
 
 
 # --- 4. 시각화 (막대 그래프) ---
@@ -243,15 +276,15 @@ sns.barplot(
 )
 
 # 그래프 제목 및 레이블 설정
-plt.title('멜론/벅스/지니 50위권 내 최다 등장 곡 (상위 25위)', fontsize=16)
+plt.title('멜론/벅스/지니 100위권 내 최다 등장 곡 (상위 50위)', fontsize=16)
 plt.xlabel('등장 횟수 (최대 3회)', fontsize=12)
 plt.ylabel('곡명 - 아티스트', fontsize=12)
 plt.grid(axis='x', linestyle='--')
 plt.tight_layout()
 
-# 생성된 그래프를 'music_top_50_chart.png' 파일로 저장합니다.
-plt.savefig('music_top_50_chart.png')
+# 생성된 그래프를 'music_top_100_chart.png' 파일로 저장합니다.
+plt.savefig('music_top_100_chart.png')
 # 그래프 저장 완료 메시지를 출력합니다.
-print("\n그래프가 'music_top_50_chart.png'로 저장되었습니다.")
+print("\n그래프가 'music_top_100_chart.png'로 저장되었습니다.")
 
 plt.show()
