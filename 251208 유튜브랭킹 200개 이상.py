@@ -52,11 +52,7 @@ def get_data(page):
     # CSS 선택자를 이용해 차트 테이블의 각 행(<tr>, 하나의 채널 정보) 엘리먼트들을 모두 찾습니다.
     articles = driver.find_elements(By.CSS_SELECTOR,'form table tbody tr') 
     
-    # 임시 리스트 초기화 (현재 페이지에서 추출한 데이터를 저장하기 위함)
-    tmp_category = []
-    tmp_title = []
-    tmp_subscribes = []
-    
+  
     # 각 채널 정보 행(row)을 순회하며 데이터를 추출합니다.
     for row in articles:
         try:
@@ -64,37 +60,31 @@ def get_data(page):
             # 현재 행 내에서 '.subject p.category' 엘리먼트를 찾습니다.
             category_element = row.find_elements(By.CSS_SELECTOR, '.subject p.category')
             if category_element:
-                tmp_category.append(category_element[0].text.strip())
+                category_list.append(category_element[0].text.strip())
             else:
-                tmp_category.append("해당 정보 없음")
+                category_list.append("해당 정보 없음")
             
             # 타이틀(채널명) 추출
             # 현재 행 내에서 '.subject a' 엘리먼트를 찾습니다.
             title_element = row.find_elements(By.CSS_SELECTOR, '.subject a')
             if title_element:
-                tmp_title.append(title_element[0].text.strip())
+                title_list.append(title_element[0].text.strip())
             else:
-                tmp_title.append("해당 정보 없음")
+                title_list.append("해당 정보 없음")
             
             # 구독자수 추출
             # 현재 행 내에서 '.subscriber_cnt' 엘리먼트를 찾습니다.
             subscribes_element = row.find_elements(By.CSS_SELECTOR, '.subscriber_cnt')
             if subscribes_element:
-                tmp_subscribes.append(subscribes_element[0].text.strip())
+                subscribes_list.append(subscribes_element[0].text.strip())
             else:
-                tmp_subscribes.append("해당 정보 없음")
+                subscribes_list.append("해당 정보 없음")
                 
         except Exception as e:
             # 개별 데이터 추출 중 예상치 못한 에러가 발생했을 때 처리합니다.
             print(f"데이터 추출 중 에러 발생: {e}")
 
 
-    # 전역 리스트에 임시 리스트의 결과를 병합(extend)합니다.
-    global category_list, title_list, subscribes_list
-    category_list.extend(tmp_category)
-    title_list.extend(tmp_title)
-    subscribes_list.extend(tmp_subscribes)
-    
     print("end :", page)
     # 작업이 완료되면 WebDriver를 종료하여 브라우저 창을 닫습니다.
     driver.quit()
