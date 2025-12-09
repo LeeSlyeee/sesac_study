@@ -14,3 +14,6 @@ __06.youtube_top100_category_pie.png
 
 \__pycache__
 \test
+
+
+*.pyc
