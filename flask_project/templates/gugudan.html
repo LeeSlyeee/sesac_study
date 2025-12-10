@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ dan_num }}단 구구단 결과</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        body { text-align: center; margin-top: 50px; }
+        h1 { font-size: 40px; font-weight: 700; color: #3498db; }
+        .gugu-list { list-style: none; padding: 0; width: 200px; margin: 20px auto; border: 1px solid #ddd; border-radius: 5px; }
+        .gugu-list li { padding: 10px; border-bottom: 1px dashed #eee; font-size: 1.2em; }
+        .gugu-list li:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    
+    <h1>"{{ dan_num }}단 구구단"</h1>
+    <ul class="gugu-list">
+        {% for dan, num, result in gugu_list %}
+        <li>
+            {{ dan }} X {{ num }} = {{ result }}
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <p><a href="/">"처음으로 돌아가기"</a></p>
+</body>
+</html>

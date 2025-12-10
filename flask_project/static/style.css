@@ -51,7 +51,7 @@ table {
 
 
 
-body {
+body#body {
 	display: flex;
 }
 

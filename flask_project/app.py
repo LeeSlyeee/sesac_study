@@ -24,11 +24,37 @@ def hello(name): # 라우트에 연결된 뷰 함수입니다. URL에서 추출�
     return f'Hello, World! {name}' 
 
 
-@app.route('/data/', endpoint='data_endpoint')
+
+
+@app.route('/data/', endpoint='data_endpoint') # '/data/' 경로에 대한 라우트를 정의합니다.
 def html():
+    """정적 HTML 템플릿을 렌더링하는 뷰 함수입니다."""
+    # templates 폴더 내의 'index.html' 파일을 찾아서 렌더링하고 응답으로 반환합니다.
     return render_template('index.html')
 
 
+
+
+@app.route('/gugudan/<int:dan>', endpoint='gugudan_endpoint')
+def gugudan(dan):
+    """
+    동적 URL 경로를 통해 정수형(int) 'dan'을 인수로 받아 해당 단의 구구단을 계산합니다.
+    (예: /gugudan/5)
+    """
+    result_list = [] # 구구단 계산 결과를 저장할 빈 리스트를 초기화합니다.
+    
+    # 1부터 9까지 반복하며 구구단을 계산합니다.
+    for i in range(1, 10):
+        result = dan * i
+        # 각 계산 결과를 (단, 곱하는 수, 결과) 튜플 형태로 리스트에 추가합니다.
+        result_list.append((dan, i, result))
+        
+    # 'gugudan.html' 템플릿을 렌더링합니다.
+    return render_template(
+        'gugudan.html', # 템플릿 파일 이름
+        dan_num = dan, # 사용자가 입력한 단(dan)을 'dan_num' 변수명으로 템플릿에 전달합니다.
+        gugu_list = result_list # 계산된 리스트를 'gugu_list' 변수명으로 템플릿에 전달합니다.
+    )
 
 # --- 라우트 정의 끝 ---
 
