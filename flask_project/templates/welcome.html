@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>환영합니다</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin-top: 100px; 
+            background-color: #e6ffe6; 
+        }
+        h1 { 
+            color: #28a745; 
+            font-size: 2em;
+        }
+        p { 
+            font-size: 1.2em; 
+        }
+        .success-box { 
+            padding: 30px; 
+            background: white; 
+            border-radius: 5px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            display: inline-block; 
+        }
+        .home-link {
+            margin-top: 20px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <h1>"{{ username }}님, 환영합니다!"</h1>
+        <p>로그인에 성공했습니다. 이 페이지는 인증된 사용자만 접근 가능합니다.</p>
+        
+        <a href="/" class="home-link">"로그인 페이지로 돌아가기"</a>
+    </div>
+</body>
+</html>
