@@ -1,6 +1,7 @@
 import os # 운영체제(Operating System)와 상호작용하기 위한 모듈을 임포트합니다. 
            # 주로 환경 변수(PORT)를 읽어오는 데 사용됩니다.
 from flask import Flask # Flask 모듈에서 Flask 클래스를 임포트합니다. 웹 애플리케이션 객체를 생성하는 데 사용됩니다.
+from flask import render_template
 
 app = Flask(__name__) # Flask 애플리케이션 객체를 생성합니다.
                       # '__name__'은 현재 모듈의 이름으로, Flask가 리소스(템플릿, 정적 파일)를 찾을 위치를 결정하는 데 도움을 줍니다.
@@ -21,6 +22,13 @@ def hello(name): # 라우트에 연결된 뷰 함수입니다. URL에서 추출�
     """동적 경로('/hello/<name>') 요청을 처리하고, URL에서 받은 이름을 포함하여 응답합니다."""
     # f-string을 사용하여 전달받은 name 값을 포함하는 포맷팅된 문자열을 응답으로 반환합니다.
     return f'Hello, World! {name}' 
+
+
+@app.route('/data/', endpoint='data_endpoint')
+def html():
+    return render_template('index.html')
+
+
 
 # --- 라우트 정의 끝 ---
 
