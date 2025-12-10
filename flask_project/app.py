@@ -1,7 +1,7 @@
 import os # 운영체제(Operating System)와 상호작용하기 위한 모듈을 임포트합니다. 
            # 주로 환경 변수(PORT)를 읽어오는 데 사용됩니다.
 from flask import Flask # Flask 모듈에서 Flask 클래스를 임포트합니다. 웹 애플리케이션 객체를 생성하는 데 사용됩니다.
-from flask import render_template
+from flask import render_template # Jinja2 템플릿 엔진을 사용하여 HTML 파일을 렌더링하고 사용자에게 응답하는 함수를 임포트합니다.
 
 app = Flask(__name__) # Flask 애플리케이션 객체를 생성합니다.
                       # '__name__'은 현재 모듈의 이름으로, Flask가 리소스(템플릿, 정적 파일)를 찾을 위치를 결정하는 데 도움을 줍니다.
@@ -13,6 +13,9 @@ app = Flask(__name__) # Flask 애플리케이션 객체를 생성합니다.
 def index():
     """기본 경로('/') 요청을 처리하는 뷰 함수입니다."""
     return 'Hi!!!' # 웹 브라우저에 'Hi!!!'라는 문자열을 응답으로 반환합니다.
+
+
+
 
 @app.route('/hello/<name>', # '/hello/' 뒤에 변수(variable part)를 포함하는 동적 URL에 대한 라우트를 정의합니다.
                             # <name> 부분은 URL에서 추출되어 hello 함수의 인수로 전달됩니다.
@@ -55,6 +58,10 @@ def gugudan(dan):
         dan_num = dan, # 사용자가 입력한 단(dan)을 'dan_num' 변수명으로 템플릿에 전달합니다.
         gugu_list = result_list # 계산된 리스트를 'gugu_list' 변수명으로 템플릿에 전달합니다.
     )
+    
+    
+    
+    
 
 # --- 라우트 정의 끝 ---
 
