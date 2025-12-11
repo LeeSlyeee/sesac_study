@@ -155,6 +155,50 @@ def welcome(username):
     return render_template('welcome.html', username=username)
 
  
+ 
+ 
+ 
+# 문의 폼 페이지 표시 및 처리
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    # 요청 방식이 POST일 경우 (폼이 제출되었을 경우)
+    if request.method == 'POST':
+        # 폼 데이터 가져오기
+        username = request.form['username']
+        email = request.form['email']
+        message = request.form['message']
+
+        # 여기서는 단순히 데이터를 출력합니다.
+        # 실제 애플리케이션에서는 이 데이터를 데이터베이스에 저장하거나,
+        # 이메일을 보내는 등의 처리를 수행해야 합니다.
+        print("--- 문의 폼 제출 내용 ---")
+        print(f"사용자명: {username}")
+        print(f"이메일: {email}")
+        print(f"문의 내용: {message}")
+        print("------------------------")
+
+        # 처리가 완료되면 'success' 페이지로 리다이렉트
+        return redirect(url_for('success'))
+    
+    # 요청 방식이 GET일 경우 (페이지를 처음 로드할 경우)
+    return render_template('contact.html') 
+ 
+ 
+ 
+# 문의 완료 페이지
+@app.route('/contact/success')
+def success():
+    return render_template('success.html')
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     
 
 
