@@ -4,7 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>테스트</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+
+    <style>
+        body#body {
+            display: flex;
+        }
+
+        aside {
+            border: 1px solid #333;
+            margin: 5px;
+            padding: 20px;
+        }
+
+        #fisrt {
+            padding: 30px 10px;
+        }
+
+        #fisrt th,td {
+            font-size: 16px;
+        }
+
+        #first tr {
+            padding: 10px 0;
+        }
+
+        #first td {
+            font-weight:700;
+        }
+    </style>
 </head>
 <body id='body'>
     <aside>이게 aside야!!!!</aside>
