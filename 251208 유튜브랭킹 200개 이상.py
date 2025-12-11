@@ -28,7 +28,14 @@ def get_data(page):
     target_url = "https://youtube-rank.com/board/bbs/board.php?bo_table=youtube&page=" + str(page)
     driver.get(target_url)
     
-    # 2. 명시적 대기 (Explicit Wait) 적용
+    
+    # 2. 스크롤 다운 (Optional)
+    # JavaScript 명령을 실행하여 페이지를 가장 아래로 스크롤합니다.
+    # 동적 로딩되는 데이터가 있을 경우 모두 로드되도록 합니다.
+    driver.execute_script("window.scrollTo(0, 99999);")
+    
+    
+    # 3. 명시적 대기 (Explicit Wait) 적용
     # 데이터가 완전히 로드될 때까지 기다리는 로직입니다.
     try:
         # 최대 10초 동안 대기합니다.
@@ -43,10 +50,7 @@ def get_data(page):
         driver.quit()
         return # 에러 발생 시 현재 함수 호출을 즉시 종료
         
-    # 3. 스크롤 다운 (Optional)
-    # JavaScript 명령을 실행하여 페이지를 가장 아래로 스크롤합니다.
-    # 동적 로딩되는 데이터가 있을 경우 모두 로드되도록 합니다.
-    driver.execute_script("window.scrollTo(0, 99999);")
+    
     
     # 4. 데이터 엘리먼트 추출
     # CSS 선택자를 이용해 차트 테이블의 각 행(<tr>, 하나의 채널 정보) 엘리먼트들을 모두 찾습니다.
