@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>파일 업로드 및 목록</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>파일 업로드 및 목록 보기</h1>
+
+        <hr>
+
+        <h2>파일 업로드</h2>
+        <form method=post action="/upload" enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value="업로드">
+        </form>
+
+        <hr>
+
+        <h2>"업로드된 파일 목록"</h2>
+        <ul>
+            {% for file in files %}
+                <li class="file-item">
+                    <a href="{{ url_for('uploaded_file', filename=file) }}" target="_blank" class="file-link">{{ file }}</a>
+                    
+                    <form method="POST" action="{{ url_for('delete_file', filename=file) }}" class="delete-form">
+                        <button type="submit" class="delete-btn" 
+                                onclick="return confirm('\"{{ file }}\" 파일을 정말 삭제하시겠습니까?');">
+                            삭제
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+            {% if not files %}
+                <li>업로드된 파일이 없습니다.</li>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>

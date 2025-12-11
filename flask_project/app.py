@@ -1,11 +1,30 @@
-import os  # 운영체제(Operating System)와 상호작용하기 위한 표준 라이브러리 모듈을 임포트합니다. 
-           # 주로 환경 변수(Environment Variable)를 읽어오는 데 사용됩니다.
-import json
-from flask import Flask # Flask 웹 프레임워크의 핵심인 Flask 클래스를 임포트합니다. 이 클래스를 사용하여 애플리케이션 객체를 생성합니다.
-from flask import render_template # Jinja2 템플릿 엔진을 사용하여 HTML 파일을 렌더링하고 사용자에게 응답하는 함수를 임포트합니다.
-from flask import url_for # Flask에서 뷰 함수 이름(엔드포인트)을 기반으로 URL을 동적으로 생성하는 함수를 임포트합니다.
-from flask import request
-from flask import redirect
+import os  # 운영체제(Operating System) 기능에 접근하기 위한 표준 라이브러리 모듈을 임포트합니다. 
+           # 파일 경로 조작, 환경 변수(Environment Variable) 접근 등 시스템 상호작용에 주로 사용됩니다.
+
+import json # JSON(JavaScript Object Notation) 데이터를 파싱(읽기)하거나 직렬화(쓰기)하는 기능을 제공하는 모듈입니다.
+           # 웹 애플리케이션에서 데이터를 주고받을 때 주로 사용됩니다.
+
+from flask import Flask # "Flask 웹 프레임워크"의 핵심인 'Flask' 클래스를 임포트합니다. 
+                         # 이 클래스의 인스턴스(객체)가 곧 웹 애플리케이션 자체가 됩니다.
+
+from flask import render_template # "Jinja2 템플릿 엔진"을 사용하여 HTML 파일을 렌더링하고 사용자에게 응답하는 함수입니다.
+                                   # 서버의 데이터를 동적으로 HTML에 삽입하여 웹 페이지를 생성할 때 사용됩니다.
+
+from flask import url_for # Flask에서 "뷰 함수 이름(엔드포인트)"을 기반으로 해당 URL을 동적으로 생성하는 함수입니다.
+                           # 하드코딩된 URL 대신 사용하여 애플리케이션의 유연성을 높입니다.
+
+from flask import request # 클라이언트(사용자 웹 브라우저)로부터 전송된 "HTTP 요청 데이터"에 접근하기 위한 객체입니다.
+                           # 폼 데이터, 쿼리 파라미터, 파일 업로드 등의 정보를 다룰 때 필수적입니다.
+
+from flask import redirect # 사용자 브라우저를 다른 URL로 "리다이렉션(재전송)"하도록 HTTP 응답을 생성하는 함수입니다.
+                            # 주로 로그인 후 페이지 이동이나 폼 제출 후 결과 페이지로 이동시 사용됩니다.
+
+from flask import send_from_directory # 특정 디렉터리 내의 "파일을 클라이언트에게 안전하게 전송"하는 함수입니다.
+                                       # 이미지, CSS, JS 파일 등의 정적 파일이나 업로드된 파일을 제공할 때 유용합니다.
+
+from werkzeug.utils import secure_filename # 파일 이름에 포함될 수 있는 "잠재적인 보안 문제(예: 경로 조작)"를 방지하기 위해 
+                                           # 파일 이름을 안전하게 정리(Sanitize)해주는 함수입니다. 주로 파일 업로드 시 사용됩니다.
+
 
 
 # Flask 애플리케이션 객체를 생성합니다.
@@ -196,6 +215,162 @@ def success():
  
  
  
+
+
+
+
+
+# 1. 파일이 저장될 경로 설정
+# 주의: '/uploads'는 절대 경로일 가능성이 높으므로, 실제 서버 환경에 맞게 조정해야 합니다.
+# 일반적으로는 'uploads'와 같이 상대 경로를 사용하여 프로젝트 폴더 내에 저장하는 것을 권장합니다.
+UPLOAD_FOLDER = 'uploads' 
+
+# 2. 허용할 확장자 설정 (보안 및 파일 유형 제한 목적)
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip'}
+
+# 3. Flask 앱 설정에 UPLOAD_FOLDER 적용
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# 4. 파일 업로드 사이즈 제한 설정 (선택 사항, 예: 16MB)
+# 주석 처리되어 있지만, 대용량 파일 업로드 시 서버 과부하 방지를 위해 활성화할 수 있습니다.
+# app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 
+
+# 애플리케이션의 보안 키 설정 (세션 및 플래시 메시지 등을 위해 필요)
+app.secret_key = 'your_strong_secret_key' 
+
+# 폴더가 없으면 생성 (파일 저장 경로가 실제로 존재하는지 확인)
+if not os.path.exists(UPLOAD_FOLDER):
+    print(f"INFO: UPLOAD_FOLDER '{UPLOAD_FOLDER}' 경로를 생성합니다.")
+    os.makedirs(UPLOAD_FOLDER)
+
+# --- 유틸리티 함수 섹션 ---
+
+def allowed_file(filename):
+    """
+    파일 이름의 확장자가 허용된 목록에 있는지 확인합니다.
+    Args:
+        filename (str): 업로드된 파일의 원래 이름
+    Returns:
+        bool: 허용된 확장자이면 True, 아니면 False
+    """
+    # 1. 파일 이름에 '.'이 포함되어 있는지 (확장자 존재 여부) 확인
+    # 2. 파일 이름에서 마지막 '.'을 기준으로 분리하여 확장자를 소문자로 추출 ([1])
+    # 3. 추출된 확장자가 ALLOWED_EXTENSIONS 집합에 있는지 확인
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# --- 라우트 정의 섹션 ---
+
+@app.route('/fileServer', methods=['GET'])
+def fileServer():
+    """
+    파일 목록 페이지 (fileServer.html)를 렌더링하는 라우트입니다.
+    업로드된 파일 목록을 가져와 템플릿에 전달합니다.
+    """
+    try:
+        # UPLOAD_FOLDER 내의 모든 파일 목록을 가져와 files 변수에 저장
+        files = os.listdir(app.config['UPLOAD_FOLDER'])
+    except FileNotFoundError:
+        # 폴더 경로에 문제가 있을 경우 예외 처리
+        files = []
+        print(f"ERROR: UPLOAD_FOLDER '{app.config['UPLOAD_FOLDER']}'를 찾을 수 없습니다.")
+    
+    # files 목록을 템플릿으로 전달하여 HTML에서 파일 목록을 표시하도록 함
+    return render_template('fileServer.html', files=files)
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    """
+    HTTP POST 요청을 받아 파일을 업로드 폴더에 저장하는 라우트입니다.
+    """
+    # 1. 요청에 파일 데이터('file' 필드)가 포함되어 있는지 확인
+    if 'file' not in request.files:
+        # 파일이 없으면 메인 페이지로 리다이렉트
+        return redirect(url_for('fileServer')) # index 대신 fileServer로 수정 필요
+
+    # 2. 파일 객체 가져오기
+    file = request.files['file']
+
+    # 3. 파일 이름이 비어있는지 (사용자가 파일을 선택하지 않았는지) 확인
+    if file.filename == '':
+        return redirect(url_for('fileServer')) # index 대신 fileServer로 수정 필요
+
+    # 4. 파일 존재 및 허용된 확장자인지 확인
+    if file and allowed_file(file.filename):
+        # 파일 이름을 안전하게 처리 (보안: 경로 인젝션 공격 방지)
+        filename = secure_filename(file.filename)
+        # 파일이 저장될 최종 경로 생성
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        # 실제 서버 디스크에 파일 저장
+        try:
+            file.save(filepath)
+            print(f"INFO: 파일 저장 성공 - {filepath}")
+        except Exception as e:
+            print(f"ERROR: 파일 저장 실패 - {e}")
+            return '파일 저장에 실패했습니다. 서버 권한을 확인하세요.', 500
+        
+        # 업로드 성공 후 파일 목록 페이지로 리다이렉트하여 갱신된 목록 표시
+        return redirect('/fileServer') 
+    
+    # 5. 허용되지 않은 파일 형식일 경우
+    return '업로드할 수 없는 파일 형식입니다. (허용 확장자: {})'.format(', '.join(ALLOWED_EXTENSIONS)), 400
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    """
+    업로드 폴더에 저장된 특정 파일을 사용자에게 서빙하는 라우트입니다.
+    파일 다운로드/미리보기 기능을 담당합니다.
+    """
+    # send_from_directory 함수는 지정된 디렉토리(UPLOAD_FOLDER) 내에서
+    # 요청된 파일 이름(filename)을 찾아 안전하게 반환 (보안 기능 내장)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/delete/<filename>', methods=['POST'])
+def delete_file(filename):
+    """
+    HTTP POST 요청을 받아 지정된 파일을 서버에서 삭제하는 라우트입니다.
+    POST를 사용하는 이유는 데이터 변경(삭제)을 안전하게 처리하기 위함입니다.
+    """
+    # 1. 파일 이름 안전하게 처리
+    filename = secure_filename(filename)
+    
+    # 2. 파일의 전체 경로 생성
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    
+    # 3. 파일이 실제로 존재하는지 확인
+    if os.path.exists(filepath):
+        try:
+            # os.remove를 사용하여 실제 파일 삭제
+            os.remove(filepath)
+            print(f"INFO: 파일 삭제 성공 - {filepath}")
+        except Exception as e:
+            # 파일 삭제 중 권한 또는 기타 오류 발생 시 처리
+            print(f"ERROR: 파일 삭제 오류 - {e}")
+            return f"파일 삭제 실패: 서버 권한 문제 또는 파일 사용 중 - {e}", 500
+    else:
+        # 파일이 존재하지 않는 경우
+        print(f"WARNING: 삭제할 파일을 찾을 수 없습니다 - {filepath}")
+        return "파일을 찾을 수 없습니다.", 404
+    
+    # 4. 삭제 후 파일 목록 페이지로 리다이렉트
+    return redirect('/fileServer')
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
  
@@ -209,7 +384,7 @@ with app.test_request_context():
     print(url_for('index')) # 결과: '/' (인수가 필요 없는 정적 라우트)
     
     # 동적 라우트('hello_endpoint')의 변수(name)를 키워드 인수로 전달합니다.
-    print(url_for('hello_endpoint', name="Slyeee")) # 결과: '/hello/Slyeee'
+    print(url_for('hello_endpoint', name='Slyeee')) # 결과: '/hello/Slyeee'
     
     print(url_for('data_endpoint')) # 결과: '/data/'
     
@@ -219,6 +394,12 @@ with app.test_request_context():
     # 문자열 변수(username)를 받는 동적 라우트에 값을 전달합니다.
     print(url_for('check_name_endpoint', username="user01")) # 결과: '/checkName/user01'
 # --- url_for 테스트 블록 끝 ---
+
+
+
+
+
+
 
 
 
