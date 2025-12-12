@@ -226,7 +226,7 @@ def success():
 UPLOAD_FOLDER = 'uploads' 
 
 # 2. 허용할 확장자 설정 (보안 및 파일 유형 제한 목적)
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip', 'xlsx', 'json', 'csv'}
 
 # 3. Flask 앱 설정에 UPLOAD_FOLDER 적용
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -287,14 +287,14 @@ def upload_file():
     # 1. 요청에 파일 데이터('file' 필드)가 포함되어 있는지 확인
     if 'file' not in request.files:
         # 파일이 없으면 메인 페이지로 리다이렉트
-        return redirect(url_for('fileServer')) # index 대신 fileServer로 수정 필요
+        return redirect(url_for('fileServer')) 
 
     # 2. 파일 객체 가져오기
     file = request.files['file']
 
     # 3. 파일 이름이 비어있는지 (사용자가 파일을 선택하지 않았는지) 확인
     if file.filename == '':
-        return redirect(url_for('fileServer')) # index 대신 fileServer로 수정 필요
+        return redirect(url_for('fileServer'))
 
     # 4. 파일 존재 및 허용된 확장자인지 확인
     if file and allowed_file(file.filename):
@@ -312,7 +312,7 @@ def upload_file():
             return '파일 저장에 실패했습니다. 서버 권한을 확인하세요.', 500
         
         # 업로드 성공 후 파일 목록 페이지로 리다이렉트하여 갱신된 목록 표시
-        return redirect('/fileServer') 
+        return redirect(url_for('fileServer')) 
     
     # 5. 허용되지 않은 파일 형식일 경우
     return '업로드할 수 없는 파일 형식입니다. (허용 확장자: {})'.format(', '.join(ALLOWED_EXTENSIONS)), 400
@@ -416,4 +416,4 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', 
             # 'host='0.0.0.0''는 외부에서 접속 가능하도록 모든 네트워크 인터페이스를 수신 대기합니다.
             port=port,  # 환경 변수 또는 기본값으로 설정된 포트에서 수신 대기합니다.
-            debug=True) # 디버그 모드 활성화 (코드 변경 시 자동 재시작 및 오류 상세 정보 표시)
+            debug=False) # 디버그 모드 활성화 (코드 변경 시 자동 재시작 및 오류 상세 정보 표시)
