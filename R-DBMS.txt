@@ -1,0 +1,16 @@
+R-DBMS 데이터 처리
+
+* SQL 
+ - DDL (Data Definition Language / create, drop, alter)
+    데이터 베이스의 뼈대를 만드는 역할
+    데이터베이스에 어떤 테이블을 만들지, 그 방에는 어떤 종류의 데이터를 몇 개까지 넣을 수 있는지 규칙을 정하는 거예요.
+
+
+
+ - DML (Data Manipulation Language / SELECT, UPDATE, INSERT, DELETE)
+    데이터를 넣고, 찾고, 정리하는 명령어
+
+
+
+ - DCL (Data Control Language / GRANT, REVOKE)
+    데이터베이스를 안전하고 질서 있게 유지하는 규칙을 세우는 아주 중요한 역할
