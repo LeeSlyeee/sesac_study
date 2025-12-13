@@ -7,13 +7,16 @@ plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.rcParams['axes.unicode_minus'] = False
 
 def main():
-    # 데이터 로드
-    file_path = r'c:\Users\slyeee\Desktop\slyeee\python_ex\mini_project\Data\서울시 부동산 실거래가 정보(2022~2025).csv'
+    # 현재 실행 중인 파일의 전체 경로를 역슬래시("\\") 기준으로 분리하여 리스트로 만듭니다.
+    file_list = __file__.split("\\") 
+    # 파일 경로에서 리스트의 마지막 요소(파일 이름)를 "cctv_result.csv"로 대체하여
+    # 로드할 CSV 파일의 전체 경로를 만듭니다. (동일 디렉토리에 있다고 가정)
+    load_file = __file__.replace(file_list[-1], "data\서울시 부동산 실거래가 정보(2022~2025).csv")
     
     try:
-        df = pd.read_csv(file_path, encoding='cp949', low_memory=False)
+        df = pd.read_csv(load_file, encoding='cp949', low_memory=False)
     except UnicodeDecodeError:
-        df = pd.read_csv(file_path, encoding='utf-8', low_memory=False)
+        df = pd.read_csv(load_file, encoding='utf-8', low_memory=False)
 
     # 데이터 전처리
     # 계약일을 datetime으로 변환 (YYYYMMDD 형식)
@@ -62,7 +65,7 @@ def main():
     plt.tight_layout()
     
     # 그래프 확인 (저장)
-    output_path = r'c:\Users\slyeee\Desktop\slyeee\python_ex\mini_project\price_trend.png'
+    output_path = __file__.replace(file_list[-1], "price_trend.png")
     plt.savefig(output_path)
     print(f"Graph saved to {output_path}")
 
