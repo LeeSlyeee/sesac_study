@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ data.title }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <style>
         /* 1. 기본 설정 */
         :root {
@@ -13,7 +15,7 @@
             --bg-color: #f4f6f8;
             --text-color: #333;
             --box-bg: #fff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -61,10 +63,35 @@
         }
 
         /* 3. 콘텐츠 디자인 */
-        h1 { font-size: 3.5em; color: var(--primary-color); margin-bottom: 20px; letter-spacing: -1px; }
-        h2 { font-size: 2.2em; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 15px; margin-bottom: 30px; }
-        h3 { font-size: 1.4em; color: var(--primary-color); margin-bottom: 15px; }
-        p { font-size: 1.2em; line-height: 1.6; max-width: 1200px; text-align: center; color: #555; word-break: keep-all; }
+        h1 {
+            font-size: 3.5em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            max-width: 1200px;
+            text-align: center;
+            color: #555;
+            word-break: keep-all;
+        }
 
         .container {
             width: 90%;
@@ -80,7 +107,9 @@
             width: 100%;
         }
 
-        .col { flex: 1; }
+        .col {
+            flex: 1;
+        }
 
         .list-box {
             background: var(--box-bg);
@@ -90,8 +119,16 @@
             text-align: left;
         }
 
-        .list-box ul { padding-left: 20px; margin: 0; }
-        .list-box li { margin-bottom: 10px; font-size: 1.1em; color: #444; }
+        .list-box ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .list-box li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #444;
+        }
 
         table {
             width: 100%;
@@ -101,11 +138,36 @@
             overflow: hidden;
             box-shadow: var(--shadow);
         }
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; font-size: 1.1em; }
-        th { background: var(--primary-color); color: #fff; }
 
-        .highlight { color: var(--accent-color); font-weight: 700; }
-        .budget-badge { background: #fff; color: var(--primary-color); padding: 10px 25px; border-radius: 30px; font-weight: bold; box-shadow: var(--shadow); display: inline-block; margin-bottom: 30px; font-size: 1.2em; }
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1em;
+        }
+
+        th {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .budget-badge {
+            background: #fff;
+            color: var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            display: inline-block;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
 
         /* 이미지 자리 표시자 클릭 스타일 */
         .clickable-image-area {
@@ -123,10 +185,12 @@
             transition: background 0.3s;
             font-weight: 500;
         }
+
         .clickable-image-area:hover {
             background: #e0e2e5;
             color: var(--primary-color);
         }
+
         .clickable-image-area img {
             max-height: 100%;
         }
@@ -154,11 +218,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-nav:hover { background-color: #34495e; }
-        .btn-nav:disabled { background-color: #ccc; cursor: not-allowed; }
+        .btn-nav:hover {
+            background-color: #34495e;
+        }
+
+        .btn-nav:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
         .page-indicator {
             position: absolute;
@@ -169,21 +239,38 @@
             z-index: 10;
         }
 
-        .final-box { border: 3px solid var(--primary-color); text-align: center; background: #fff; }
-        .final-title { font-size: 3em; color: var(--primary-color); margin: 20px 0; }
-        small { font-size: 0.6em; color: #777; font-weight: 400; }
+        .final-box {
+            border: 3px solid var(--primary-color);
+            text-align: center;
+            background: #fff;
+        }
+
+        .final-title {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        small {
+            font-size: 0.6em;
+            color: #777;
+            font-weight: 400;
+        }
 
         /* 5. 모달(팝업) 스타일 */
         .modal {
-            display: none; /* 기본 숨김 */
+            display: none;
+            /* 기본 숨김 */
             position: fixed;
-            z-index: 9999; /* 최상위로 */
+            z-index: 9999;
+            /* 최상위로 */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.9); /* 어두운 배경 */
+            background-color: rgba(0, 0, 0, 0.9);
+            /* 어두운 배경 */
             align-items: center;
             justify-content: center;
         }
@@ -191,17 +278,20 @@
         .modal-content {
             margin: auto;
             display: block;
-            width: 80%;
-            max-width: 900px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
             border-radius: 5px;
             animation-name: zoom;
             animation-duration: 0.6s;
         }
 
         @keyframes zoom {
-            from {transform: scale(0)}
-            to {transform: scale(1)}
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
         }
 
         .modal-close {
@@ -223,17 +313,18 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="slide-container">
         <div class="slide active">
-            <h1>{{ data.title }}</h1>
+            <h1 style="text-align: center">강원도 토박이 A씨의<br/>서울 거주지 찾기 기획 발표</h1>
             <p style="font-size: 1.5em; margin-bottom: 50px; color: #666;">
-                데이터 기반 의사결정 프로젝트
+                데이터 기반 의사결정 과정 기획 발표
             </p>
             <div class="list-box" style="display: inline-block; padding: 30px 50px;">
-                <p style="margin: 0; text-align: left;"><strong>발표자:</strong> A씨</p>
-                <p style="margin: 10px 0 0 0; text-align: left;"><strong>발표일:</strong> 2025.12.13</p>
+                <p style="margin: 0; text-align: center;"><strong>발표자:</strong> 이성희</p>
+                <p style="margin: 10px 0 0 0; text-align: center;"><strong>발표일:</strong> 2025.12.17(수)</p>
             </div>
         </div>
 
@@ -244,16 +335,14 @@
                 <div class="col list-box">
                     <h3>📉 거래량 추이</h3>
                     <p class="highlight" style="text-align: left;">{{ data.analysis_summary.volume }}</p>
-                    <div class="clickable-image-area" 
-                         onclick="openModal('./static/transaction_trend.png')">
+                    <div class="clickable-image-area" onclick="openModal('./static/transaction_trend.png')">
                         <img src="./static/transaction_trend.png" alt="">
                     </div>
                 </div>
                 <div class="col list-box">
                     <h3>💰 금액 변동 추이</h3>
                     <p class="highlight" style="text-align: left;">{{ data.analysis_summary.price_change }}</p>
-                    <div class="clickable-image-area" 
-                         onclick="openModal('./static/price_trend.png')">
+                    <div class="clickable-image-area" onclick="openModal('./static/price_trend.png')">
                         <img src="./static/price_trend.png" alt="">
                     </div>
                 </div>
@@ -278,7 +367,7 @@
                         <tr>
                             <td><strong>{{ region.gu }}</strong> {{ region.dong }}</td>
                             <td class="highlight">{{ region.avg_price }}</td>
-                            <td style="text-align: left;">{{ region.note }}</td>
+                            <td>{{ region.note }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -310,9 +399,11 @@
         <div class="slide">
             <h2>최종 제안</h2>
             <p>예산의 적절성, 실거주 편의성, 그리고 미래 자산 가치 상승 여력을 종합적으로 고려한 최종 선택입니다.</p>
-            
+
             <div class="container final-box" style="padding: 50px;">
-                <span style="background: var(--primary-color); color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 0.9em;">BEST CHOICE</span>
+                <span
+                    style="background: var(--primary-color); color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 0.9em;">BEST
+                    CHOICE</span>
                 <div class="final-title">
                     {{ data.final_decision.gu }} <span style="font-weight: 300;">{{ data.final_decision.dong }}</span>
                 </div>
@@ -320,7 +411,7 @@
                     {{ data.final_decision.reason }}
                 </p>
             </div>
-            
+
             <p style="margin-top: 50px; font-size: 1em; color: #999;">감사합니다. Q&A</p>
         </div>
     </div>
@@ -365,7 +456,7 @@
             showSlide(currentSlide + direction);
         }
 
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             // 모달이 열려 있을 때는 슬라이드 이동 막기
             if (document.getElementById('imageModal').style.display === 'flex') return;
 
@@ -396,9 +487,9 @@
             }
             modal.style.display = "none";
         }
-        
+
         // ESC 키로 모달 닫기 기능 추가
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
                 closeModal();
             }
@@ -406,4 +497,5 @@
     </script>
 
 </body>
+
 </html>

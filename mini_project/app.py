@@ -5,7 +5,6 @@ app = Flask(__name__)
 # 가상의 분석 결과를 위한 더미 데이터
 # 실제 데이터 분석 결과로 대체해야 합니다.
 presentation_data = {
-    "title": "A씨의 서울 거주지 찾기 프로젝트 발표",
     "budget": "10억원",
     "candidate_regions": [
         {"gu": "도봉구", "dong": "창동", "avg_price": "5.5억", "note": "교통 및 재개발 잠재력 우수"},
@@ -14,7 +13,7 @@ presentation_data = {
     ],
     "analysis_summary": {
         "volume": "2022년 대비 2023년 거래량 감소 후, 2024년 이후 점진적 회복세",
-        "price_change": "2023년 하락 후 2024년 소폭 반등, 2025년 (현재) 안정화 추세"
+        "price_change": "2023년 하락 후 2024년 소폭 반등"
     },
     "final_decision": {
         "gu": "도봉구",
