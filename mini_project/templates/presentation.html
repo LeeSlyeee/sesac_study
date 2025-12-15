@@ -358,7 +358,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th width="25%">지역 (구/동)</th>
+                            <th width="25%">지역구</th>
                             <th width="25%">평균 실거래가</th>
                             <th width="50%">선정 이유</th>
                         </tr>
@@ -366,7 +366,7 @@
                     <tbody>
                         {% for region in data.candidate_regions %}
                         <tr>
-                            <td><strong>{{ region.gu }}</strong> {{ region.dong }}</td>
+                            <td><strong>{{ region.gu }}</strong></td>
                             <td class="highlight">{{ region.avg_price }}</td>
                             <td>{{ region.note }}</td>
                         </tr>
