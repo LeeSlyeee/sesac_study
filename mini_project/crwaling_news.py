@@ -213,13 +213,13 @@ else:
 
     df_filtered = df.dropna(subset=['parsed_date'])
     df_filtered = df_filtered[
-        (df_filtered['parsed_date'].dt.year >= 2023) & 
+        (df_filtered['parsed_date'].dt.year >= 2022) & 
         (df_filtered['parsed_date'].dt.year <= 2025)
     ]
 
     df_filtered = df_filtered.sort_values(by='parsed_date', ascending=False)
 
-    print(f"Filtered row count (2023-2025): {len(df_filtered)}")
+    print(f"Filtered row count (2022-2025): {len(df_filtered)}")
     print(f"Removed {len(df) - len(df_filtered)} rows.")
 
     df_filtered = df_filtered.drop(columns=['parsed_date'])
@@ -430,13 +430,13 @@ else:
 
     df_filtered = df.dropna(subset=['parsed_date'])
     df_filtered = df_filtered[
-        (df_filtered['parsed_date'].dt.year >= 2023) & 
+        (df_filtered['parsed_date'].dt.year >= 2022) & 
         (df_filtered['parsed_date'].dt.year <= 2025)
     ]
 
     df_filtered = df_filtered.sort_values(by='parsed_date', ascending=False)
 
-    print(f"Filtered row count (2023-2025): {len(df_filtered)}")
+    print(f"Filtered row count (2022-2025): {len(df_filtered)}")
     print(f"Removed {len(df) - len(df_filtered)} rows.")
 
     df_filtered = df_filtered.drop(columns=['parsed_date'])
@@ -653,13 +653,13 @@ else:
 
     df_filtered = df.dropna(subset=['parsed_date'])
     df_filtered = df_filtered[
-        (df_filtered['parsed_date'].dt.year >= 2023) & 
+        (df_filtered['parsed_date'].dt.year >= 2022) & 
         (df_filtered['parsed_date'].dt.year <= 2025)
     ]
 
     df_filtered = df_filtered.sort_values(by='parsed_date', ascending=False)
 
-    print(f"Filtered row count (2023-2025): {len(df_filtered)}")
+    print(f"Filtered row count (2022-2025): {len(df_filtered)}")
     print(f"Removed {len(df) - len(df_filtered)} rows.")
 
     df_filtered = df_filtered.drop(columns=['parsed_date'])
