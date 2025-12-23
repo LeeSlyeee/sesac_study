@@ -5,12 +5,17 @@ USE employees;
 USE mysql;
 SELECT * FROM employees;
 
+-- [오류 발생 가능성]
+-- 현재 선택된 데이터베이스는 'mysql'입니다.
+-- 'mysql' 데이터베이스에는 'titles'라는 테이블이 없으므로 에러가 발생할 수 있습니다.
+-- 해결: SELECT * FROM employees.titles; 와 같이 데이터베이스를 명시하거나 USE employees; 레를 먼저 실행해야 합니다.
 SELECT * FROM titles ;
 
+-- 'employees' 데이터베이스의 'titles' 테이블을 명시적으로 조회하므로 정상 실행됩니다.
 SELECT * FROM employees.titles;
 
 SELECT * FROM employees.titles;
-SELECT * FROM titles;
+SELECT * FROM titles; -- 여전히 현재 DB가 mysql이라면 에러 발생
 
 SELECT first_name FROM employees;
 
@@ -29,20 +34,26 @@ FROM employees;
 
 -- <실습 1> --
 
+-- 현재 서버에 있는 데이터베이스 정보 조회
 SHOW DATABASES;
 
+-- 사용할 데이터베이스 지정
 USE employees;
 
+-- 현재 선택된 데이터베이스의 테이블 정보 조회
 SHOW TABLE STATUS;
 
+-- 테이블 이름만 간단히 조회
 SHOW TABLES; 
 
+-- employees 테이블의 구조(컬럼 정보) 조회
 DESCRIBE employees; -- 또는 DESC employees;
 
 SELECT first_name, gender FROM employees;
 
 -- </실습 1> --
 
+-- AS(Alias): 컬럼명에 별칭 부여. 공백이 포함된 별칭은 작은따옴표('')로 감싸야 함
 SELECT first_name AS 이름 , gender 성별, hire_date '회사 입사일'
 FROM employees;
 
@@ -110,41 +121,59 @@ exit
 USE  sqldb;
 SELECT * FROM usertbl;
 
+-- 기본 WHERE 절: 이름이 '김경호'인 행 조회
 SELECT * FROM usertbl WHERE name = '김경호';
 
+-- AND 연산자: 1970년 이후 출생이고 키가 182 이상인 사람
 SELECT userID, Name FROM usertbl WHERE birthYear >= 1970 AND height >= 182;
 
+-- OR 연산자: 1970년 이후 출생이거나 키가 182 이상인 사람
 SELECT userID, Name FROM usertbl WHERE birthYear >= 1970 OR height >= 182;
 
+-- 범위 조회 (AND 사용)
 SELECT name, height FROM usertbl WHERE height >= 180 AND height <= 183;
 
+-- BETWEEN ... AND ... : 연속된 범위 조회에 사용
 SELECT name, height FROM usertbl WHERE height BETWEEN 180 AND 183;
 
+-- OR 연산자로 여러 지역 조회
 SELECT name, addr FROM usertbl WHERE addr='경남' OR  addr='전남' OR addr='경북';
 
+-- IN() : 이산적인 값들 중 하나에 해당하는지 조회
 SELECT name, addr FROM usertbl WHERE addr IN ('경남','전남','경북');
 
+-- LIKE : 문자열 패턴 매칭 ('김%' : 김으로 시작하는 모든 문자열)
 SELECT name, height FROM usertbl WHERE name LIKE '김%';
 
+-- LIKE : ('_종신' : 앞 한 글자는 무엇이든 상관없고 뒤가 '종신'인 문자열)
 SELECT name, height FROM usertbl WHERE name LIKE '_종신';
 
+-- 서브쿼리(SubQuery) 학습
 SELECT name, height FROM usertbl WHERE height  > 177;
 
+-- '김경호'의 키보다 큰 사람 조회. 서브쿼리가 먼저 실행되어 김경호의 키(177)를 반환함
 SELECT name, height FROM usertbl 
    WHERE height > (SELECT height FROM usertbl WHERE Name = '김경호');
 
+-- [오류 발생 가능성]
+-- 서브쿼리 결과가 2개 이상(경남인 사람이 여러 명)이면 비교 연산자(>=)만으로는 에러 발생
+-- 해결: ANY, ALL 등의 키워드 필요
 SELECT name, height FROM usertbl 
    WHERE height >= (SELECT height FROM usertbl WHERE addr = '경남');
 
+-- ANY: 서브쿼리 결과 중 하나라도 만족하면 참 (즉, 최소값보다 크거나 같으면 됨 -> 170 이상)
 SELECT name, height FROM usertbl 
    WHERE height >= ANY (SELECT height FROM usertbl WHERE addr = '경남');
 
+-- ALL: 서브쿼리 결과 모두를 만족해야 참 (즉, 최대값보다 크거나 같아야 함 -> 173 이상)
 SELECT name, height FROM usertbl 
    WHERE height >= ALL (SELECT height FROM usertbl WHERE addr = '경남');
 
+-- = ANY : IN() 과 동일한 효과
 SELECT name, height FROM usertbl 
    WHERE height = ANY (SELECT height FROM usertbl WHERE addr = '경남');
    
+-- IN() : 서브쿼리 결과에 포함되는 값 찾기
 SELECT name, height FROM usertbl 
   WHERE height IN (SELECT height FROM usertbl WHERE addr = '경남');
 
@@ -209,26 +238,34 @@ SELECT COUNT(*) FROM usertbl;
 SELECT COUNT(mobile1) AS '휴대폰이 있는 사용자' FROM usertbl;
 
 USE sqldb;
+-- 기본적인 GROUP BY: 사용자별 총 구매액
 SELECT userID AS '사용자', SUM(price*amount) AS '총구매액'  
    FROM buytbl 
    GROUP BY userID ;
 
+-- [오류 발생] WHERE 절에 집계 함수 사용 불가
+-- 오류 내용: Invalid use of group function
+-- 이유: WHERE 절은 그룹화하기 '전'에 필터링을 수행하므로, 그룹화가 필요한 SUM() 함수를 사용할 수 없습니다.
+-- 해결: GROUP BY 다음에 오는 HAVING 절을 사용해야 합니다.
 SELECT userID AS '사용자', SUM(price*amount) AS '총구매액'  
    FROM buytbl 
    WHERE SUM(price*amount) > 1000 
    GROUP BY userID ;
 
+-- 정상 쿼리: HAVING 절 사용
 SELECT userID AS '사용자', SUM(price*amount) AS '총구매액'  
    FROM buytbl 
    GROUP BY userID
    HAVING SUM(price*amount) > 1000 ;
 
+-- ORDER BY는 맨 마지막에 위치해야 함
 SELECT userID AS '사용자', SUM(price*amount) AS '총구매액'  
    FROM buytbl 
    GROUP BY userID
    HAVING SUM(price*amount) > 1000 
    ORDER BY SUM(price*amount) ;
 
+-- WITH ROLLUP: 그룹별 중간 합계와 총 합계를 구해줌
 SELECT num, groupName, SUM(price * amount) AS '비용' 
    FROM buytbl
    GROUP BY  groupName, num
@@ -285,35 +322,46 @@ USE sqldb;
 CREATE TABLE testTbl5 
    (SELECT emp_no, first_name, last_name  FROM employees.employees) ;
 
+-- 데이터 수정 (UPDATE)
 UPDATE testTbl4
     SET Lname = '없음'
     WHERE Fname = 'Kyoichi';
 
 USE sqldb;
+-- [주의/오류 가능성] WHERE 절 없는 UPDATE
+-- MySQL의 'Safe Update' 모드가 켜져 있다면, Key 컬럼을 이용한 WHERE 절 없이 전체 테이블을 업데이트하려 할 때 에러를 발생시킬 수 있습니다.
+-- 에러 메시지: You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column
 UPDATE buytbl SET price = price * 1.5 ;
 
 USE sqldb;
+-- [오류 가능성] Safe Update 모드에 걸릴 수 있음
 DELETE FROM testTbl4 WHERE Fname = 'Aamer';
 
+-- LIMIT을 사용하면 일부 Safe Update 제한을 우회할 수도 있지만 시스템 설정에 따름
 DELETE FROM testTbl4 WHERE Fname = 'Aamer'  LIMIT 5;
 
 
--- <실습 3> --
+-- <실습 3> : 대용량 테이블 삭제 비교 --
 
 USE sqldb;
 CREATE TABLE bigTbl1 (SELECT * FROM employees.employees);
 CREATE TABLE bigTbl2 (SELECT * FROM employees.employees);
 CREATE TABLE bigTbl3 (SELECT * FROM employees.employees);
 
+-- 1. DELETE: DML 명령. 데이터를 하나씩 삭제하며 트랜잭션 로그를 남김. 가장 느림.
 DELETE FROM bigTbl1;
+
+-- 2. DROP: DDL 명령. 테이블 자체를 삭제함 (구조도 사라짐). 빠름.
 DROP TABLE bigTbl2;
+
+-- 3. TRUNCATE: DDL 명령. 테이블 구조는 남기고 데이터만 싹 비움. 로그를 적게 남겨 DELETE보다 훨씬 빠름.
 TRUNCATE TABLE bigTbl3;
 
 -- </실습 3> --
 
 
 
--- <실습 4> --
+-- <실습 4> : 제약조건, 데이터 중복 처리 --
 
 USE sqldb;
 CREATE TABLE memberTBL (SELECT userID, name, addr FROM usertbl LIMIT 3); -- 3건만 가져옴
@@ -326,11 +374,15 @@ INSERT INTO memberTBL VALUES('SJH' , '서장훈', '서울');
 INSERT INTO memberTBL VALUES('HJY' , '현주엽', '경기');
 SELECT * FROM memberTBL;
 
+-- [INSERT IGNORE]
+-- PRIMARY KEY 중복 등으로 인한 에러 발생 시, 에러를 내고 멈추는 대신 경고만 발생시키고 무시(넘어감)한다.
 INSERT IGNORE INTO memberTBL VALUES('BBK' , '비비코', '미국');
 INSERT IGNORE INTO memberTBL VALUES('SJH' , '서장훈', '서울');
 INSERT IGNORE INTO memberTBL VALUES('HJY' , '현주엽', '경기');
 SELECT * FROM memberTBL;
 
+-- [ON DUPLICATE KEY UPDATE]
+-- PK 중복 발생 시, INSERT 대신 UPDATE를 수행한다.
 INSERT INTO memberTBL VALUES('BBK' , '비비코', '미국')
 	ON DUPLICATE KEY UPDATE name='비비코', addr='미국';
 INSERT INTO memberTBL VALUES('DJM' , '동짜몽', '일본')
