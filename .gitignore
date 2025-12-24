@@ -17,6 +17,7 @@ __06.youtube_top100_category_pie.png
 \__pycache__
 \test
 \java_script
+\.vscode
 
 
 *.pyc
