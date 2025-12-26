@@ -176,7 +176,7 @@ def score_manager_program():
         print("---------- 과목최소 ----------")
         find_min_score(subject_list, student_dict)
 
-# score_manager_program()
+score_manager_program()
 
 
 # func_total_avg(tmp_data)
